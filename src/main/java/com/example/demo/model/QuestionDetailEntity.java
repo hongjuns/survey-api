@@ -26,8 +26,18 @@ public class QuestionDetailEntity {
     @Column(name="useyn")
     private String useYn;
 
+    @Column(name="title")
+    private String title;
+
+    @Column(name="questionid")
+    private String questionid;
+
+    @Column(name="questionvalue")
+    private String questionvalue;
+
     @ManyToOne(targetEntity = SurveyEntity.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "questionseq")
+    @OrderBy(value = "seq ASC")
     private SurveyEntity survey; // 연관관계 지정
 
 

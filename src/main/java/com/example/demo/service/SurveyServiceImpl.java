@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.AnswerEntity;
 import com.example.demo.model.QuestionDetailEntity;
 import com.example.demo.model.SurveyEntity;
+import com.example.demo.persistence.AnswerRepository;
 import com.example.demo.persistence.SurveyRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,9 +14,10 @@ import java.util.Optional;
 @Service
 public class SurveyServiceImpl implements SurveyService {
     private final SurveyRepository surveyRepository;
-
-    public SurveyServiceImpl(SurveyRepository surveyRepository) {
+    private final AnswerRepository answerRepository;
+    public SurveyServiceImpl(SurveyRepository surveyRepository,AnswerRepository answerRepository) {
         this.surveyRepository = surveyRepository;
+        this.answerRepository = answerRepository;
     }
 
     @Override
@@ -28,6 +31,11 @@ public class SurveyServiceImpl implements SurveyService {
         }else {
             throw new RuntimeException("No question type.");
         }
+    }
+
+    @Override
+    public AnswerEntity insertAnswer(AnswerEntity answerEntity) {
+       return answerRepository.save(answerEntity);
     }
 
     private void validata(SurveyEntity entity){

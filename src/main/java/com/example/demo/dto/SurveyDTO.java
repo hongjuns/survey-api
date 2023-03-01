@@ -11,20 +11,16 @@ import lombok.NoArgsConstructor;
 @Data
 public class SurveyDTO {
 
-    private String key;
     private Long questionSeq;
-    private String type;
-    private String question;
-    private String title;
-    private String questionId;
-    private String questionValue;
-
+    private String key;
+    private String userNm;
 
     public static SurveyEntity toEntity(SurveyDTO dto){
         return SurveyEntity.builder()
-                .secretkey(dto.getKey())
-                .questionseq(dto.getQuestionSeq())
+                .userNm(dto.getUserNm())
+                .questionSeq(dto.getQuestionSeq())
                 .build();
     }
+
 
 }

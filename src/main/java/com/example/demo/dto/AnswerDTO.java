@@ -15,17 +15,10 @@ public class AnswerDTO {
     private String key;
     private String answerInfo;
     private String msg;
-    @Override
-    public String toString() {
-        return "AnswerDTO{" +
-                "key='" + key + '\'' +
-                ", answerInfo='" + answerInfo + '\'' +
-                '}';
-    }
 
     public static AnswerEntity toEntity(AnswerDTO dto){
         return AnswerEntity.builder()
-                .secretkey(dto.getKey())
+                .secretKey(dto.getKey())
                 .answer(dto.getAnswerInfo())
                 .build();
     }

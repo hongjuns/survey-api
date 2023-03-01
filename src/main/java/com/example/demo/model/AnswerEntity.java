@@ -20,12 +20,12 @@ public class AnswerEntity {
     @Column(name="seq")
     private Long seq;
 
-    @Column(name="secretkey")
-    private String secretkey;
+    @Column(name="secret_key")
+    private String secretKey;
 
     @Column(name="answer")
     private String answer;
 
-    @Column(name="regdt")
+    @Column(name="reg_dt")
     private LocalDateTime regdt;
 }

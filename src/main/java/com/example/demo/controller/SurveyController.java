@@ -29,12 +29,13 @@ public class SurveyController {
 
         SurveyEntity surveyEntity = surveyService.selectQuestion(entity);
         List <QuestionDetailDTO> dtos = surveyEntity.getQuestionStoreEntities().stream().map(entityData -> new QuestionDetailDTO(entityData)).collect(Collectors.toList());
+
         ResponseDTO<QuestionDetailDTO> response = ResponseDTO.<QuestionDetailDTO>builder().data(dtos).build();
 
         return ResponseEntity.ok().body(response);
     }
 
-    @PostMapping("/inset")
+    @PostMapping("/insertAnswer")
     public ResponseEntity<?> insertAnswer (@RequestBody AnswerDTO dto) {
 
         AnswerEntity entity = AnswerDTO.toEntity(dto);
@@ -54,7 +55,7 @@ public class SurveyController {
         SurveyEntity entities = surveyService.insertSurvey(entity);
 
         List<SurveyDTO> dtos = new ArrayList();
-        dtos.add(new SurveyDTO(entities.getQuestionSeq(), entities.getSecretKey(), entities.getUserNm()));
+        dtos.add(new SurveyDTO(entities.getQuestionSeq(), entities.getSecretKey(), entities.getUserNm(),entities.getRegDt()));
         ResponseDTO<SurveyDTO> response = ResponseDTO.<SurveyDTO>builder().data(dtos).build();
 
         return ResponseEntity.ok().body(response);

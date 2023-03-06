@@ -14,6 +14,7 @@ public class SurveyDTO {
     private Long questionSeq;
     private String key;
     private String userNm;
+    private String regDt;
 
     public static SurveyEntity toEntity(SurveyDTO dto){
         return SurveyEntity.builder()

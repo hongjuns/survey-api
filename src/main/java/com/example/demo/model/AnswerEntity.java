@@ -4,8 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Builder
 @NoArgsConstructor
@@ -25,7 +29,12 @@ public class AnswerEntity {
 
     @Column(name="answer")
     private String answer;
-
+    @CreatedDate
     @Column(name="reg_dt")
-    private LocalDateTime regdt;
+    private String regdt;
+
+    @PrePersist
+    public void onPrePersist(){
+        this.regdt = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy.MM.dd"));
+    }
 }

@@ -10,7 +10,7 @@ Spring Boot 이용한 Survey API
 - ORM
   - JPA
 - DB
-  - mysql
+  - Mysql
 
 ## 코드 실행
 
@@ -25,8 +25,8 @@ $ ./gradlew bootRun
 
 | Method     | URI                               | Action                                                  |
 |------------|-----------------------------------|---------------------------------------------------------|
-| `GET`      | `selectQuestion`             | `App\Http\Controllers\SurveyController@selectQuestion`    |
-| `POST`    | `insertAnswer`                | `App\Http\Controllers\SurveyController@insertAnswer`    |
-| `POST `   | `insertSurvey`                 | `App\Http\Controllers\SurveyController@insertSurvey`    |
+| `GET`      | `selectQuestion`                  | `App\Http\Controllers\SurveyController@selectQuestion`  |
+| `POST`     | `insertAnswer`                    | `App\Http\Controllers\SurveyController@insertAnswer`    |
+| `POST`     | `insertSurvey`                    | `App\Http\Controllers\SurveyController@insertSurvey`    |
 
 

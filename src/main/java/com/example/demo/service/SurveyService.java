@@ -1,10 +1,12 @@
 package com.example.demo.service;
+import com.example.demo.dto.SurveyDTO;
+import com.example.demo.model.Answer;
+import com.example.demo.model.Survey;
+import java.util.*;
 
-import com.example.demo.model.AnswerEntity;
-import com.example.demo.model.SurveyEntity;
 
 public interface SurveyService {
-    SurveyEntity selectQuestion(SurveyEntity surveyEntity);
-    AnswerEntity insertAnswer(AnswerEntity answerEntity);
-    SurveyEntity insertSurvey (SurveyEntity surveyEntity);
+    Survey findOne (int id);
+    SurveyDTO findSurveyItem (Survey survey);
+    void saveAnswer (List<Answer> answers);
 }

@@ -1,17 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AnswerDTO;
-import com.example.demo.dto.QuestionDetailDTO;
 import com.example.demo.dto.ResponseDTO;
 import com.example.demo.dto.SurveyDTO;
-import com.example.demo.model.AnswerEntity;
-import com.example.demo.model.SurveyEntity;
+import com.example.demo.exception.CustomizedResponseHandler;
+import com.example.demo.model.Answer;
+import com.example.demo.model.Survey;
 import com.example.demo.service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,44 +20,47 @@ public class SurveyController {
     @Autowired
     private SurveyService surveyService;
 
-    @GetMapping("/selectQuestion")
-    public ResponseEntity<?> selectQuestion (@RequestParam("key") String key) {
+    @GetMapping("/{id}")
+    public ResponseEntity<?> selectSurvey (@PathVariable int id) {
 
-        SurveyEntity entity = new SurveyEntity();
-        entity.setSecretKey(key);
+        try{
+            Survey survey = surveyService.findOne(id);
 
-        SurveyEntity surveyEntity = surveyService.selectQuestion(entity);
-        List <QuestionDetailDTO> dtos = surveyEntity.getQuestionStoreEntities().stream().map(entityData -> new QuestionDetailDTO(entityData)).collect(Collectors.toList());
+            if (survey == null){
+                throw new CustomizedResponseHandler.SurveyNotFoundException(String.format("ID [%s} Not Found" ,id));
+            }
 
-        ResponseDTO<QuestionDetailDTO> response = ResponseDTO.<QuestionDetailDTO>builder().data(dtos).build();
+            SurveyDTO dto = surveyService.findSurveyItem(survey);
+            return ResponseEntity.ok().body(dto);
 
-        return ResponseEntity.ok().body(response);
+        }catch (Exception e){
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
     }
 
-    @PostMapping("/insertAnswer")
-    public ResponseEntity<?> insertAnswer (@RequestBody AnswerDTO dto) {
+    @PostMapping("/{id}")
+    public ResponseEntity<?> insertAnswer (@PathVariable int id, @RequestBody SurveyDTO answerDTO) {
 
-        AnswerEntity entity = AnswerDTO.toEntity(dto);
-        AnswerEntity entities = surveyService.insertAnswer(entity);
+        try{
+            Survey survey = surveyService.findOne(id);
 
-        List<AnswerDTO> dtos = new ArrayList();
-        dtos.add(new AnswerDTO(entities.getSecretKey(),entities.getAnswer(),"등록이 완료되었습니다."));
-        ResponseDTO<AnswerDTO> response = ResponseDTO.<AnswerDTO>builder().data(dtos).build();
+            if (survey == null){
+                throw new CustomizedResponseHandler.SurveyNotFoundException(String.format("ID [%s} Not Found" ,id));
+            }
+            //DTO -> Entity 변환
+            List<Answer> answersEntity = answerDTO.getAnswerDTOList()
+                    .stream()
+                    .map(item -> AnswerDTO.toEntity(item))
+                    .collect(Collectors.toList());
 
-        return ResponseEntity.ok().body(response);
-    }
+            surveyService.saveAnswer(answersEntity);
+            return ResponseEntity.ok().body("등록이 완료되었습니다.");
 
-    @PostMapping("/insertSurvey")
-    public ResponseEntity<?> insertSurvey (@RequestBody SurveyDTO dto) {
-
-        SurveyEntity entity = SurveyDTO.toEntity(dto);
-        SurveyEntity entities = surveyService.insertSurvey(entity);
-
-        List<SurveyDTO> dtos = new ArrayList();
-        dtos.add(new SurveyDTO(entities.getQuestionSeq(), entities.getSecretKey(), entities.getUserNm(),entities.getRegDt()));
-        ResponseDTO<SurveyDTO> response = ResponseDTO.<SurveyDTO>builder().data(dtos).build();
-
-        return ResponseEntity.ok().body(response);
+        }catch (Exception e){
+            ResponseDTO responseDTO = ResponseDTO.builder().error(e.getMessage()).build();
+            return ResponseEntity.badRequest().body(responseDTO);
+        }
     }
 
 }

@@ -1,7 +1,5 @@
 package com.example.demo;
 
-import com.example.demo.dto.SurveyDTO;
-import com.example.demo.model.SurveyEntity;
 import com.example.demo.service.SurveyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

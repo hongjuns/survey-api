@@ -1,6 +1,10 @@
 package com.example.demo.persistence;
 
-import com.example.demo.model.AnswerEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AnswerRepository extends JpaRepository<AnswerEntity,Long> {}
+import com.example.demo.model.Answer;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface AnswerRepository extends JpaRepository<Answer,Long> {
+}

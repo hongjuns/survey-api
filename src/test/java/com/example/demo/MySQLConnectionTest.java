@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 @SpringBootTest
 public class MySQLConnectionTest {
     private static final String DRIVER = "com.mysql.jdbc.Driver";
-    @Value("${spring.datasource.testurl}")
+    @Value("${spring.datasource.url}")
     String URL;
     @Value("${spring.datasource.username}")
     String USER;
@@ -17,6 +17,8 @@ public class MySQLConnectionTest {
 
     @Test
     public void testConnection() throws Exception{
+        System.out.println("URL"+URL);
+
         Class.forName(DRIVER);
 
         try(Connection conn = DriverManager.getConnection(URL, USER, PW)){
@@ -24,5 +26,6 @@ public class MySQLConnectionTest {
         } catch (Exception e) {
             System.out.println("error :" +e.getMessage());
         }
+
     }
 }

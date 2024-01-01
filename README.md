@@ -23,10 +23,10 @@ $ ./gradlew bootRun
 
 ### Survey
 
-| Method     | URI                               | Action                                                  |
-|------------|-----------------------------------|---------------------------------------------------------|
-| `GET`      | `selectQuestion`                  | `App\Http\Controllers\SurveyController@selectQuestion`  |
-| `POST`     | `insertAnswer`                    | `App\Http\Controllers\SurveyController@insertAnswer`    |
-| `POST`     | `insertSurvey`                    | `App\Http\Controllers\SurveyController@insertSurvey`    |
+| Method     | URI            | Action                                                  |
+|------------|----------------|---------------------------------------------------------|
+| `GET`      | `selectSurvey` | `App\Http\Controllers\SurveyController@selectSurvey`    |
+| `POST`     | `insertAnswer` | `App\Http\Controllers\SurveyController@insertAnswer`    |
+
 
 
